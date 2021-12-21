@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 
     # My app
     'budget',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
