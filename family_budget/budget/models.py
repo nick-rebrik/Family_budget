@@ -8,7 +8,7 @@ User = get_user_model()
 
 
 class BudgetsList(models.Model):
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='list_of_budgets'
