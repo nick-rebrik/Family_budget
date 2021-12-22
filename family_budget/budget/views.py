@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 
-from .models import BudgetsList, Budget, Category
-from .serializers import (BudgetsListSerializer, BudgetSerializer,
-                          BudgetCreateSerializer, CategorySerializer)
+from .models import Budget, BudgetsList, Category
+from .serializers import (BudgetCreateSerializer, BudgetOperationSerializer,
+                          BudgetSerializer, BudgetsListSerializer,
+                          CategorySerializer)
 
 
 class BudgetsListViewSet(viewsets.ModelViewSet):
@@ -42,3 +43,15 @@ class BudgetViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+
+class BudgetOperationViewSet(viewsets.ModelViewSet):
+    serializer_class = BudgetOperationSerializer
+
+    def get_queryset(self):
+        budget = get_object_or_404(Budget, id=self.kwargs['budget_id'])
+        return budget.budget_operations.all()
+
+    def perform_create(self, serializer):
+        budget = get_object_or_404(Budget, id=self.kwargs['budget_id'])
+        serializer.save(budget=budget)
