@@ -3,14 +3,6 @@ from rest_framework import serializers
 from .models import BudgetsList, Budget, Category, BudgetOperation
 
 
-class BudgetsListSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username', read_only=True)
-
-    class Meta:
-        model = BudgetsList
-        fields = ('id', 'title', 'user')
-
-
 class BudgetSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -20,6 +12,14 @@ class BudgetSerializer(serializers.ModelSerializer):
             'title',
             'balance',
             'currency',
-            'user',
             'create_date',
         )
+
+
+class BudgetsListSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username', read_only=True)
+    budgets = BudgetSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = BudgetsList
+        fields = ('id', 'title', 'user', 'budgets')
