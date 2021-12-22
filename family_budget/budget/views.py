@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from .models import Budget, BudgetsList, Category
 from .serializers import (BudgetCreateSerializer, BudgetOperationSerializer,
                           BudgetSerializer, BudgetsListSerializer,
-                          CategorySerializer)
+                          CategorySerializer, ShortBudgetSerializer)
 
 
 class BudgetsListViewSet(viewsets.ModelViewSet):
@@ -37,6 +37,8 @@ class BudgetViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == 'create':
             return BudgetCreateSerializer
+        elif self.action == 'list':
+            return ShortBudgetSerializer
         return BudgetSerializer
 
 
