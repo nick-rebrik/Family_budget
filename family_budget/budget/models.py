@@ -21,7 +21,7 @@ class BudgetsList(models.Model):
         ordering = ('id',)
 
     def __str__(self):
-        return f"{str(self.owner).title()}'s list of budgets"
+        return f"{str(self.owner).title()}'s {self.title} list of budgets"
 
 
 class Category(models.Model):

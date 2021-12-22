@@ -2,6 +2,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from .filters import OperationFilter
 from .models import Budget, BudgetsList, Category
@@ -55,6 +56,7 @@ class BudgetViewSet(viewsets.ModelViewSet):
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class BudgetOperationViewSet(viewsets.ModelViewSet):
