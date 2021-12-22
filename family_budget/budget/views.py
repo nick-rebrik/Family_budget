@@ -2,7 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 
 from .models import BudgetsList, Budget
-from .serializers import BudgetsListSerializer, BudgetSerializer
+from .serializers import (BudgetsListSerializer, BudgetSerializer,
+                          BudgetCreateSerializer)
 
 
 class BudgetsListViewSet(viewsets.ModelViewSet):
@@ -18,7 +19,6 @@ class BudgetsListViewSet(viewsets.ModelViewSet):
 
 
 class BudgetViewSet(viewsets.ModelViewSet):
-    serializer_class = BudgetSerializer
 
     def get_queryset(self):
         budgets_list = get_object_or_404(
@@ -28,4 +28,12 @@ class BudgetViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
-        serializer.save(user=user)
+        budget_list = get_object_or_404(
+            BudgetsList, id=self.kwargs['list_id']
+        )
+        serializer.save(user=user, budget_list=budget_list)
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return BudgetCreateSerializer
+        return BudgetSerializer

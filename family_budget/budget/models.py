@@ -61,7 +61,7 @@ class Budget(models.Model):
     balance = models.DecimalField(
         max_digits=19,
         decimal_places=2,
-        # editable=False
+        editable=False,
         blank=True
     )
     create_date = models.DateTimeField(auto_now=True)
