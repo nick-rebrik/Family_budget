@@ -12,7 +12,7 @@ class BudgetsList(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='list_of_budgets'
+        related_name='budgets_lists'
     )
 
     class Meta:

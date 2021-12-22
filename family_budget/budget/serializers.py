@@ -9,3 +9,17 @@ class BudgetsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = BudgetsList
         fields = ('id', 'title', 'user')
+
+
+class BudgetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Budget
+        fields = (
+            'id',
+            'title',
+            'balance',
+            'currency',
+            'user',
+            'create_date',
+        )
