@@ -1,6 +1,10 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .models import Budget, BudgetOperation, BudgetsList, Category
+from .models import (Budget, BudgetOperation, BudgetsList, Category,
+                     SharePermission)
+
+User = get_user_model()
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -32,7 +36,7 @@ class BudgetCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Budget
-        fields = ('title', 'currency', 'initial_balance')
+        fields = ('id', 'title', 'currency', 'initial_balance')
 
 
 class ShortBudgetSerializer(serializers.ModelSerializer):
@@ -63,9 +67,20 @@ class BudgetSerializer(serializers.ModelSerializer):
 
 
 class BudgetsListSerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source='user.username', read_only=True)
+    owner = serializers.CharField(source='owner.username', read_only=True)
     budgets = ShortBudgetSerializer(many=True, read_only=True)
 
     class Meta:
         model = BudgetsList
-        fields = ('id', 'title', 'user', 'budgets')
+        fields = ('id', 'title', 'owner', 'budgets')
+
+
+class ShareSerializer(serializers.ModelSerializer):
+    user = serializers.SlugRelatedField(
+        slug_field='username',
+        queryset=User.objects.all()
+    )
+
+    class Meta:
+        model = SharePermission
+        fields = ('id', 'user',)

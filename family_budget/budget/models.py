@@ -9,7 +9,7 @@ User = get_user_model()
 
 class BudgetsList(models.Model):
     title = models.CharField(max_length=100)
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='budgets_lists'
@@ -21,7 +21,7 @@ class BudgetsList(models.Model):
         ordering = ('id',)
 
     def __str__(self):
-        return f"{str(self.user).title()}'s list of budgets"
+        return f"{str(self.owner).title()}'s list of budgets"
 
 
 class Category(models.Model):
@@ -67,7 +67,7 @@ class Budget(models.Model):
         blank=True
     )
     create_date = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='budgets'
@@ -158,3 +158,29 @@ class BudgetOperation(models.Model):
     def __str__(self):
         return (f'{self.operation_type}. {self.category} '
                 f'- {self.amount} {self.budget.currency}')
+
+
+class SharePermission(models.Model):
+    budgets_list = models.ForeignKey(
+        BudgetsList,
+        on_delete=models.CASCADE,
+        related_name='shared_permissions'
+    )
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='permits_granted'
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='permits_obtained'
+    )
+
+    class Meta:
+        verbose_name = 'Shared permission'
+        verbose_name_plural = 'Shared permissions'
+        ordering = ('id',)
+
+    def __str__(self):
+        return f'{self.budgets_list} shared to {self.user}'
