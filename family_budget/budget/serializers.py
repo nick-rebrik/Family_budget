@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from .models import (Budget, BudgetOperation, BudgetsList, Category,
                      SharePermission)
@@ -84,3 +85,10 @@ class ShareSerializer(serializers.ModelSerializer):
     class Meta:
         model = SharePermission
         fields = ('id', 'user',)
+
+    def validate(self, attrs):
+        if self.context['request'].method != 'POST':
+            return attrs
+        if self.context['request'].user == attrs['user']:
+            raise ValidationError('You cannot share access to yourself')
+        return attrs
