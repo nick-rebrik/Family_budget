@@ -124,7 +124,17 @@ class BudgetOperation(models.Model):
         verbose_name = 'Budget operation'
         verbose_name_plural = 'Budget operations'
 
+    def update_balance(self):
+        operation = BudgetOperation.objects.get(pk=self.pk)
+        if operation.operation_type == 'Expense':
+            self.budget.balance += operation.amount
+        else:
+            self.budget.balance -= operation.amount
+        self.budget.save()
+
     def save(self, *args, **kwargs):
+        if BudgetOperation.objects.filter(pk=self.pk).exists():
+            self.update_balance()
         if self.operation_type == 'Expense':
             self.budget.balance -= self.amount
         else:
