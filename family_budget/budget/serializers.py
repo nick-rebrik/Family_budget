@@ -3,6 +3,13 @@ from rest_framework import serializers
 from .models import Budget, BudgetOperation, BudgetsList, Category
 
 
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ('title',)
+
+
 class BudgetOperationSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(
         slug_field='title',
