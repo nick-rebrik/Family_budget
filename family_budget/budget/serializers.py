@@ -29,6 +29,7 @@ class BudgetOperationSerializer(serializers.ModelSerializer):
             'category',
             'amount',
             'note',
+            'user',
             'date'
         )
 

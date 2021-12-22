@@ -71,7 +71,7 @@ class BudgetOperationViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         budget = get_object_or_404(Budget, id=self.kwargs['budget_id'])
-        serializer.save(budget=budget)
+        serializer.save(user=self.request.user, budget=budget)
 
 
 class ShareViewSet(viewsets.ModelViewSet):

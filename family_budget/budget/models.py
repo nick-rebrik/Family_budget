@@ -122,6 +122,11 @@ class BudgetOperation(models.Model):
         decimal_places=2
     )
     note = models.TextField()
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='budget_operations'
+    )
     date = models.DateTimeField(auto_now=True)
 
     class Meta:
