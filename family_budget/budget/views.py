@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 
+from .filters import OperationFilter
 from .models import Budget, BudgetsList, Category
 from .serializers import (BudgetCreateSerializer, BudgetOperationSerializer,
                           BudgetSerializer, BudgetsListSerializer,
@@ -49,6 +51,8 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 class BudgetOperationViewSet(viewsets.ModelViewSet):
     serializer_class = BudgetOperationSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = OperationFilter
 
     def get_queryset(self):
         budget = get_object_or_404(Budget, id=self.kwargs['budget_id'])

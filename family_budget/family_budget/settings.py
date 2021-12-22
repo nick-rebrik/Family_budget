@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     # My app
     'budget',
     'rest_framework',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {

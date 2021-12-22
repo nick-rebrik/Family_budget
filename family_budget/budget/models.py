@@ -18,6 +18,7 @@ class BudgetsList(models.Model):
     class Meta:
         verbose_name = 'List of budgets'
         verbose_name_plural = 'Lists of budgets'
+        ordering = ('id',)
 
     def __str__(self):
         return f"{str(self.user).title()}'s list of budgets"
@@ -31,6 +32,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
+        ordering = ('id',)
 
     def __str__(self):
         return self.title
@@ -79,6 +81,7 @@ class Budget(models.Model):
     class Meta:
         verbose_name = 'Budget'
         verbose_name_plural = 'Budgets'
+        ordering = ('create_date',)
 
     def save(self, *args, **kwargs):
         if not self.balance:
@@ -111,6 +114,7 @@ class BudgetOperation(models.Model):
     category = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
+        related_name='budget_operations',
         null=True
     )
     amount = models.DecimalField(
@@ -123,6 +127,7 @@ class BudgetOperation(models.Model):
     class Meta:
         verbose_name = 'Budget operation'
         verbose_name_plural = 'Budget operations'
+        ordering = ('date',)
 
     def update_balance(self):
         operation = BudgetOperation.objects.get(pk=self.pk)
