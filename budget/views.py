@@ -5,7 +5,8 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .filters import OperationFilter
-from .models import Budget, BudgetsList, Category
+from .models import (Budget, BudgetOperation, BudgetsList, Category,
+                     SharePermission)
 from .permissions import AdmittedOrOwner, OnlyOwnerDelete
 from .serializers import (BudgetCreateSerializer, BudgetOperationSerializer,
                           BudgetSerializer, BudgetsListSerializer,
@@ -33,6 +34,9 @@ class BudgetViewSet(viewsets.ModelViewSet):
     permission_classes = (OnlyOwnerDelete, AdmittedOrOwner)
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return BudgetsList.objects.none()
+
         budgets_list = get_object_or_404(
             BudgetsList, id=self.kwargs['list_id']
         )
@@ -66,6 +70,9 @@ class BudgetOperationViewSet(viewsets.ModelViewSet):
     filterset_class = OperationFilter
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return BudgetOperation.objects.none()
+
         budget = get_object_or_404(Budget, id=self.kwargs['budget_id'])
         return budget.budget_operations.all()
 
@@ -78,6 +85,9 @@ class ShareViewSet(viewsets.ModelViewSet):
     serializer_class = ShareSerializer
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return SharePermission.objects.none()
+
         budgets_list = get_object_or_404(
             BudgetsList, id=self.kwargs['list_id']
         )

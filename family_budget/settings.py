@@ -24,11 +24,16 @@ INSTALLED_APPS = [
     # My app
     'budget',
     'rest_framework',
-    'django_filters',
+    'rest_framework.authtoken',
     'djoser',
+    'drf_yasg',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.IsAuthenticated',
         ],
@@ -116,3 +121,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
