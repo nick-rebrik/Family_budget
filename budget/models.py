@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
 from django.db import models
 
 
@@ -119,7 +120,13 @@ class BudgetOperation(models.Model):
     )
     amount = models.DecimalField(
         max_digits=19,
-        decimal_places=2
+        decimal_places=2,
+        validators=[
+            MinValueValidator(
+                Decimal('0.01'),
+                message='Minimum amount - 0.01'
+            )
+        ]
     )
     note = models.TextField(blank=True, null=True)
     user = models.ForeignKey(
