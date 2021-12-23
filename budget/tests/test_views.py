@@ -216,6 +216,3 @@ class SharePermissionViewTest(TestCase):
         self.assertEqual(
             self.budgets_list.id, budgets_lists_after['results'][0]['id']
         )
-
-
-
