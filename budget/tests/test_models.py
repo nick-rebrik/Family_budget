@@ -162,12 +162,6 @@ class SharePermissionModelTest(TestCase):
             title='Testing',
             owner=owner,
         )
-        cls.budget = Budget.objects.create(
-            title='Main',
-            currency=Budget.Currency.USD,
-            owner=owner,
-            budget_list=cls.budgets_list
-        )
         cls.shared_permission = SharePermission.objects.create(
             budgets_list=cls.budgets_list,
             owner=owner,

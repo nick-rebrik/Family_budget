@@ -52,13 +52,13 @@ class AllURLTests(TestCase):
         self.token = f'Token {self.user_token.key}'
 
         self.urls = {
-            'budget_list-list': reverse(
+            'budget_lists-list': reverse(
                 'budget:budgets-list',
                 kwargs={
                     'list_id': self.budgets_list.id,
                 }
             ),
-            'budget_list-detail': reverse(
+            'budget_lists-detail': reverse(
                 'budget:budgets-detail',
                 kwargs={
                     'list_id': self.budgets_list.id,
