@@ -3,8 +3,8 @@ from decimal import Decimal
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from budget.models import Budget, BudgetOperation, BudgetsList, Category, \
-    SharePermission
+from budget.models import (Budget, BudgetOperation, BudgetsList,
+                           Category, SharePermission)
 
 User = get_user_model()
 
