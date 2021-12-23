@@ -21,7 +21,7 @@ class BudgetsListViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         all_lists = BudgetsList.objects.filter(
-            Q(owner=user) | Q(shared_permissions__user=user)
+            Q(owner=user.id) | Q(shared_permissions__user=user.id)
         ).distinct()
         return all_lists
 
