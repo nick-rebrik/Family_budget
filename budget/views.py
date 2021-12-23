@@ -16,7 +16,7 @@ from .serializers import (BudgetCreateSerializer, BudgetOperationSerializer,
 
 class BudgetsListViewSet(viewsets.ModelViewSet):
     serializer_class = BudgetsListSerializer
-    permission_classes = (OnlyOwnerDelete,)
+    permission_classes = (IsAuthenticated, OnlyOwnerDelete)
 
     def get_queryset(self):
         user = self.request.user
@@ -31,7 +31,7 @@ class BudgetsListViewSet(viewsets.ModelViewSet):
 
 
 class BudgetViewSet(viewsets.ModelViewSet):
-    permission_classes = (OnlyOwnerDelete, AdmittedOrOwner)
+    permission_classes = (IsAuthenticated, OnlyOwnerDelete, AdmittedOrOwner)
 
     def get_queryset(self):
         if getattr(self, 'swagger_fake_view', False):
@@ -65,7 +65,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 class BudgetOperationViewSet(viewsets.ModelViewSet):
     serializer_class = BudgetOperationSerializer
-    permission_classes = (AdmittedOrOwner,)
+    permission_classes = (IsAuthenticated, AdmittedOrOwner)
     filter_backends = (DjangoFilterBackend,)
     filterset_class = OperationFilter
 
@@ -82,6 +82,7 @@ class BudgetOperationViewSet(viewsets.ModelViewSet):
 
 
 class ShareViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated, AdmittedOrOwner)
     serializer_class = ShareSerializer
 
     def get_queryset(self):
