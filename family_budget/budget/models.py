@@ -121,7 +121,7 @@ class BudgetOperation(models.Model):
         max_digits=19,
         decimal_places=2
     )
-    note = models.TextField()
+    note = models.TextField(blank=True, null=True)
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
