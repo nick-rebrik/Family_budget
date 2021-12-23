@@ -43,7 +43,7 @@ class BudgetViewSet(viewsets.ModelViewSet):
         budget_list = get_object_or_404(
             BudgetsList, id=self.kwargs['list_id']
         )
-        serializer.save(user=user, budget_list=budget_list)
+        serializer.save(owner=user, budget_list=budget_list)
 
     def get_serializer_class(self):
         if self.action == 'create':

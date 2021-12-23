@@ -20,6 +20,7 @@ class BudgetOperationSerializer(serializers.ModelSerializer):
         slug_field='title',
         queryset=Category.objects.all()
     )
+    user = serializers.CharField(source='user.username', read_only=True)
 
     class Meta:
         model = BudgetOperation
