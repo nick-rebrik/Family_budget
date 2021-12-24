@@ -4,8 +4,10 @@
 Application for budgeting, with the possibility of:
 - Create budget lists and share them with other users
 - Create budgets
-- Sort expenses and receipts in budgets on categories.<br>
+- Sort expenses and receipts in budgets on categories<br>
+
 To use, you need to log in and receive your token. The program is covered with tests and has test fixtures
+
 
 ### Technologies
 
